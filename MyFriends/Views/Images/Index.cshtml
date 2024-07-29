@@ -1,0 +1,45 @@
+﻿@model IEnumerable<MyFriends.Models.Image>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Friend)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MyImage)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Friend.Id)
+            </td>
+            <td>
+                    @{
+                        var base64Image = Convert.ToBase64String(item.MyImage);
+                        var imageSrc = String.Format("data:image/png;base64,{0}", base64Image);
+                    }
+                    <img src="@imageSrc" alt="Image" style="max-height:100px; max-widht:100px"  />
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
